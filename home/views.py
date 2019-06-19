@@ -13,3 +13,7 @@ def form2(request):
 
 def form1(request):
     	return render(request, 'form1.html')
+
+
+def carousel(request):
+    	return render(request, 'carousel.html')
