@@ -23,7 +23,7 @@ SECRET_KEY = '=_@cf=_y!5e=h_czi7d&%zcg-@@z%6(rb&dvklt(9tp10+yz-l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aryandjango.herokuapp.com']
 
 
 # Application definition
