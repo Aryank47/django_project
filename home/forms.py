@@ -1,33 +1,29 @@
 from django import forms
-from home.models import library
-from datetime import date
+from home.models import Book,Author,Genre
 
 
-class customForms(forms.Form):
-    Studentname = forms.CharField(label='Name',
-                                  widget=forms.TextInput(
-                                      attrs={'maxlength': '30', 'placeholder': 'StudentName', 'class': 'form-control'}))
-    Branch = forms.CharField(label='Branch', widget=forms.TextInput(
-        attrs={'maxlength': '20', 'placeholder': 'Branch', 'class': 'form-control'}))
-    IssueDate = forms.DateField(label='IssueDate', widget=forms.DateInput(
-                                attrs={'maxlength': '30', 'placeholder': 'Issuedate', 'class': 'form-control'}))
-    SubmissionDate = forms.DateField(label='SubmissionDate', widget=forms.DateInput(
-        attrs={'maxlength': '30', 'placeholder': 'SubmissionDate', 'class': 'form-control'}))
-    IssuedBooks = forms.IntegerField(label='BooksIssued', widget=forms.NumberInput(
-        attrs={'maxlength': '30', 'placeholder': 'BooksIssued', 'class': 'form-control'}))
+class BookForms(forms.Form):
+    name = forms.CharField(label='Book Name',
+        widget = forms.TextInput(attrs={'maxlength':'30', 'placeholder':'Book Name','class':'form-control'}))
+    author = forms.ModelChoiceField(
+                    queryset=Author.objects.all(),
+                    empty_label='', widget= forms.Select(attrs={'name':'author','id':'author','class':'custom-select'}))
+    pur_date = forms.DateField(label='',
+                            widget = forms.DateInput(attrs={'placeholder':'Purchase Date','name':'pur_date','id':'pur_date','class':'form-control'}))
+    # genre = forms.ModelMultipleChoiceField(queryset=Genre.objects.all(),
+    #                         widget=forms.CheckboxSelectMultiple)
 
 
-# class ModelcustomForms(forms.Form):
-#     Studentname=forms.CharField(label='Name',
-#                             widget=forms.TextInput(
-#                                 attrs={'maxlength':'30','placeholder':'StudentName','class':'form-control'}))
-#     Branch=forms.CharField(label='Branch',widget=forms.TextInput(attrs={'maxlength':'20','placeholder':'Branch','class':'form-control'}))
-#     IssueDate=forms.DateField(label='IssueDate',widget=forms.DateInput(
-#                                 attrs={'maxlength':'30','placeholder':'Issuedate','class':'form-control'}))
-#     SubmissionDate=forms.DateField(label='SubmissionDate',widget=forms.DateInput(
-#                                 attrs={'maxlength':'30','placeholder':'SubmissionDate','class':'form-control'}))
-#     IssuedBooks=forms.IntegerField(label='BooksIssued',widget=forms.NumberInput(
-#                                 attrs={'maxlength':'30','placeholder':'BooksIssued','class':'form-control'}))
-#     class Meta:
-#         model=library
-#         fields='__all__'
+
+
+
+class ModelBookForms(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ('name','genre','purchase_date','author')
+        # fields = '__all__'
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField(label='',
+        widget = forms.TextInput(attrs={'maxlength':'30', 'placeholder':'Search','class':'form-control', 'minlength':'2'}))
